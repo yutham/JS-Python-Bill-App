@@ -1,29 +1,48 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8" />
+        <title>Billing Application</title>
+        <link
+            href="{{ url_for('static',filename='css/login.css') }}"
+            rel="stylesheet"
+        />
+        <script
+            src="{{ url_for('static',filename='js/login.js') }}"
+            defer
+        ></script>
+    </head>
 
-<head>
-    <meta charset="utf-8">
-    <title>Billing Application</title>
-    <link href="{{ url_for('static',filename='login.css') }}" rel="stylesheet">
-    <script src="{{ url_for('static',filename='login.js') }}" defer></script>
-</head>
-
-<body>
-    <div class="login-page">
-        <div class="form">
-            <form class="login-form " action="/home">
-                <h2>SIGN IN TO YOUR ACCOUNT</h2>
-                <input type="text" required placeholder="Username" id="user" autocomplete="off" />
-                <input oninput="return formvalid()" type="password" required placeholder="Password" id="pass"
-                    autocomplete="off" />
-                <img src="https://cdn2.iconfinder.com/data/icons/basic-ui-interface-v-2/32/hide-512.png"
-                    onclick="show()" id="showimg">
-                <span id="vaild-pass"></span>
-                <button type="submit">SIGN IN</button>
-                <p class="message"><a href="#">Forgot your password?</a></p>
-            </form>
+    <body>
+        <div class="login-page">
+            <div class="form">
+                <form class="login-form" action="/home">
+                    <h2>SIGN IN TO YOUR ACCOUNT</h2>
+                    <input
+                        type="text"
+                        required
+                        placeholder="Username"
+                        id="user"
+                        autocomplete="off"
+                    />
+                    <input
+                        oninput="return formvalid()"
+                        type="password"
+                        required
+                        placeholder="Password"
+                        id="pass"
+                        autocomplete="off"
+                    />
+                    <img
+                        src="https://cdn2.iconfinder.com/data/icons/basic-ui-interface-v-2/32/hide-512.png"
+                        onclick="show()"
+                        id="showimg"
+                    />
+                    <span id="vaild-pass"></span>
+                    <button type="submit">SIGN IN</button>
+                    <p class="message"><a href="#">Forgot your password?</a></p>
+                </form>
+            </div>
         </div>
-    </div>
-</body>
-
+    </body>
 </html>
