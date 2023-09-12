@@ -21,7 +21,11 @@ def Add_Data():
     try:
         df = pd.read_excel("product.xlsx")
         max_value = df['Id'].max()
-        max_value += 1
+        print(type(max_value))
+        if not isinstance(max_value, int):
+            max_value = 1
+        else:
+            max_value += 1
         new_record = {'Id': max_value,
                       'Column1': 'Value1',
                       'Column2': 'Value2'}
