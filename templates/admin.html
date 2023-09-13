@@ -8,6 +8,10 @@
             href="{{ url_for('static',filename='css/admin.css') }}"
             rel="stylesheet"
         />
+        <script
+            src="{{ url_for('static',filename='js/admin.js') }}"
+            defer
+        ></script>
     </head>
     <body>
         <div class="add-item">
@@ -51,8 +55,18 @@
                     <td>{{ row['Product Name'] }}</td>
                     <td>{{ row['Price'] }}</td>
                     <td>{{ row['Quantity'] }}</td>
-                    <td><input type="button" value="Edit" /></td>
-                    <td><input type="button" value="Delete" /></td>
+                    <td>
+                        <button
+                            onclick="displayEditPopUp(`{{row['Index']}}`, `{{ row['Product Name'] }}` , `{{ row['Price'] }}`, `{{ row['Quantity'] }}`)"
+                        >
+                            Edit
+                        </button>
+                    </td>
+                    <td>
+                        <button onclick="deleteRecord(`{{row['Index']}}`)">
+                            Delete
+                        </button>
+                    </td>
                 </tr>
                 {% endfor %}
             </table>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from modules import admin
 import webview  # Library to create a gui window
 
@@ -36,7 +36,21 @@ def addStock():
     return redirect(url_for('adminPage'))
 
 
-webview.create_window('Billing App', app)  # To enable a gui window
+@app.route('/edit/<int:index>', methods=['POST'])
+def editStock(index):
+    print("edit function")
+    # add edit feature
+    return redirect(url_for('adminPage'))
+
+
+@app.route('/delete/<int:index>', methods=['POST'])
+def deleteStock(index):
+    print("delete function", index)
+    # add delete feature
+    return redirect(url_for('adminPage'))
+
+
+# webview.create_window('Billing App', app)  # To enable a gui window
 if __name__ == '__main__':
-    # app.run(debug=True)  # Only use for development (recommended)
-    webview.start()  # To start a gui
+    app.run(debug=True)  # Only use for development (recommended)
+    # webview.start()  # To start a gui

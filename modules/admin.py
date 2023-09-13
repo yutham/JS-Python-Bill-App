@@ -1,16 +1,14 @@
-import pandas as pd
 import os
+import sys
+import pandas as pd
 import openpyxl
 
 
 def load_workbook(wb_path):  # Loading Excel Sheet
-    if os.path.exists(wb_path):
-        return openpyxl.load_workbook(wb_path)
-    else:
-        return None
+    return openpyxl.load_workbook(wb_path)
 
 
-wb_path = "./data/stocks.xlsx"
+wb_path = "data\stocks.xlsx"
 wb = load_workbook(wb_path)
 sheet = wb['Sheet1']
 sheet_obj = wb.active
@@ -18,9 +16,8 @@ sheet_obj = wb.active
 
 def Add_Stock(new_record):
     try:
-        df = pd.read_excel("data/stocks.xlsx")
-        index = int(df['Index'].max())
-
+        index = int(sheet_obj.max_row)-1
+        print(sheet_obj)
         if not isinstance(index, int):
             index = 1
         else:
@@ -40,8 +37,13 @@ def Add_Stock(new_record):
 
 
 def display_stocks():
-    data = pd.read_excel("./data/stocks.xlsx")
-    data = data.to_dict(orient='records')
+    data = []
+    header = [cell.value for cell in sheet_obj[1]]
+    for row in sheet.iter_rows(min_row=2, values_only=True):
+        row_data = dict(zip(header, row))
+        data.append(row_data)
+
+    print(data)
     return data
 
 
