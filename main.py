@@ -1,25 +1,60 @@
 from flask import Flask, render_template
 import openpyxl  # This Import is for using excel is python
 import pandas as pd  # Its For creating data frames
+import webview
+
+import sys
 import os
 
 
-def load_workbook(wb_path):  # Loading Excel Sheet
-    if os.path.exists(wb_path):
-        return openpyxl.load_workbook(wb_path)
-    else:
-        return None
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
 
 
-wb_path = "product.xlsx"
-wb = load_workbook(wb_path)
+# wb_path = "./Product.xlsx"
+# os.chdir("E:/Bill App/JS-Python-Bill-App-main")
+wb = openpyxl.load_workbook(resource_path("Product.xlsx"))
+# def load_workbook(wb_path):  # Loading Excel Sheet
+#     if os.path.exists(wb_path):
+#         return openpyxl.load_workbook(wb_path)
+#     else:
+#         return None
+# Get the current directory of the script
+# xlsx_filename = 'Product.xlsx'
+
+# current_directory = os.path.dirname(os.path.abspath(xlsx_filename))
+# print(current_directory)
+
+# Construct the full path to the Excel file
+# wb_path = "/Product.xlsx"
+# print(wb_path)
+
+
+# wb = openpyxl.load_workbook(wb_path)
+# print(wb)
+
+
+# wb = openpyxl.load_workbook(wb_path)
 sheet = wb['Sheet1']
 sheet_obj = wb.active
+
+# Print value of cell object
+# using the value attribute
+# print(list(sheet.values))
+# print(list(sheet.values))
+# print(sheet_obj.cell)
 
 
 def Add_Data():
     try:
-        df = pd.read_excel("product.xlsx")
+        df = pd.read_excel("./Product.xlsx")
         max_value = df['Id'].max()
         print(type(max_value))
         if not isinstance(max_value, int):
@@ -45,8 +80,7 @@ def Add_Data():
 
 def view():
     # viewing the data using data-frame
-    df = pd.read_excel("product.xlsx", index_col=0)
-    return print(df)
+    return list(sheet.values)
 
 
 def search(id):  # this function is to search the data in the excel sheet
@@ -104,41 +138,45 @@ def login():
 
 @app.route('/home')
 def home():
-    return render_template("home.html", name='cairocoders page 2')
+    return render_template("home.html", name='cairocoders page 2', message=view())
 
 
-@app.route('/Admin')
-def admin():
-    while True:
-        print("\n 1:add")
-        print("\n 2:view")
-        print("\n 3:Update")
-        print("\n 4:Delete")
-        ch = int(input("enter your choic:"))
-        if ch == 1:
-            Add_Data()
-        elif ch == 2:
-            view()
-        elif ch == 3:
-            x = int(input("\n Enter the Id:"))
-            row = search(x)
-            Display_record(row)
-            y = input("\n want to edit the employee ? yes/no:")
-            if y.lower() == 'yes':
-                Update_records(row)
-        elif ch == 4:
-            x = int(input("\n Enter the Id:"))
-            row = search(x)
-            Display_record(row)
-            y = input("\n want to Delete the employee ? yes/no:")
-            if y.lower() == 'yes':
-                Delete_record(row)
+@app.route('/Admin', methods=["POST"])
+def viewinpage():
+    return 'hello'
 
 
-admin()
-# webview.create_window('Billing App', app) # To enable a gui window
+# @app.route('/Admin')
+# def admin():
+#     while True:
+#         print("\n 1:add")
+#         print("\n 2:view")
+#         print("\n 3:Update")
+#         print("\n 4:Delete")
+#         ch = int(input("enter your choic:"))
+#         if ch == 1:
+#             Add_Data()
+#         elif ch == 2:
+#             view()
+#         elif ch == 3:
+#             x = int(input("\n Enter the Id:"))
+#             row = search(x)
+#             Display_record(row)
+#             y = input("\n want to edit the record ? yes/no:")
+#             if y.lower() == 'yes':
+#                 Update_records(row)
+#         elif ch == 4:
+#             x = int(input("\n Enter the Id:"))
+#             row = search(x)
+#             Display_record(row)
+#             y = input("\n want to Delete the record ? yes/no:")
+#             if y.lower() == 'yes':
+#                 Delete_record(row)
+
+
+webview.create_window('Billing App', app)  # To enable a gui window
 
 
 if __name__ == '__main__':
-    app.run(debug=True)  # Only use for development (recommended)
-    # webview.start() # To start a gui
+    # app.run(debug=True)  # Only use for development (recommended)
+    webview.start()  # To start a gui
