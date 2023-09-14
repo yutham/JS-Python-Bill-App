@@ -21,7 +21,6 @@ sheet = wb['Sheet1']
 sheet_obj = wb.active
 
 
-
 def Add_Stock(New_Record):  # To Add Stock
 
     try:
@@ -88,4 +87,3 @@ def Delete_stocks(index):  # this function is to delete the data in the excel sh
     except Exception as e:
         print(f"An error occurred while adding data: {str(e)}")
         return False
-
