@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Edit Record</title>
+    </head>
+    <body>
+        <div id="popup" class="popup" style="display: block">
+            <h1>Edit Record</h1>
+            <form method="POST" action="/edit/record/{{ record['Index'] }}">
+                <input
+                    type="text"
+                    name="product_name"
+                    value="{{ record['Product Name'] }}"
+                /><br />
+                <input
+                    type="text"
+                    name="price"
+                    value="{{ record['Price'] }}"
+                /><br />
+                <input
+                    type="text"
+                    name="quantity"
+                    value="{{ record['Quantity'] }}"
+                /><br />
+                <input type="submit" value="Save" />
+            </form>
+        </div>
+    </body>
+</html>

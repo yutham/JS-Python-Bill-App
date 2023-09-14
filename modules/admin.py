@@ -16,11 +16,14 @@ def resource_path(relative_path):
 
 wb = openpyxl.load_workbook(resource_path("stocks.xlsx"))
 
+
 sheet = wb['Sheet1']
 sheet_obj = wb.active
 
 
+
 def Add_Stock(New_Record):  # To Add Stock
+
     try:
         index = int(sheet_obj.max_row)-1
         print(sheet_obj)
@@ -35,6 +38,7 @@ def Add_Stock(New_Record):  # To Add Stock
                           int(New_Record['Quantity'])])
         wb.save(resource_path("stocks.xlsx"))
         # print("Data Added")
+
         return True
 
     except Exception as e:
@@ -84,3 +88,4 @@ def Delete_stocks(index):  # this function is to delete the data in the excel sh
     except Exception as e:
         print(f"An error occurred while adding data: {str(e)}")
         return False
+

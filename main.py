@@ -1,26 +1,26 @@
-from flask import Flask, render_template, redirect, url_for, request
-import webview
+
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from modules import admin
-
-# import webview # Libray to create a gui window
-
+import webview  # Library to create a gui window
 
 app = Flask(__name__, static_folder='./static', template_folder='./templates')
 
 
 @app.route('/')
-def login():
-    return render_template("login.html", name='cairocoders Home page')
+def loginPage():
+    return render_template("login.html")
 
 
 @app.route('/home')
-def home():
-    return render_template("home.html", name='cairocoders page 2')
+def homePage():
+    return render_template("home.html")
+
 
 
 @app.route('/admin')
 def adminPage():
     data = admin.Display_stocks()
+
     return render_template("admin.html", data=data)
 
 
@@ -33,6 +33,7 @@ def addStock():
         New_Record['Quantity'] = request.form.get('quantity')
         print(New_Record)
         admin.Add_Stock(New_Record)
+
 
     return redirect(url_for('adminPage'))
 
@@ -48,6 +49,7 @@ def editStock(index):
         index = int(index)
 
         admin.Edit_stocks(index, Edited_Record)
+
     return redirect(url_for('adminPage'))
 
 
@@ -66,3 +68,4 @@ webview.create_window('Billing App', app)  # To enable a gui window
 if __name__ == '__main__':
     # app.run(debug=True)  # Only use for development (recommended)
     webview.start()  # To start a gui
+
