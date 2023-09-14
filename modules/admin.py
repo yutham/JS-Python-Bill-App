@@ -1,6 +1,7 @@
 import openpyxl  # This Import is for using excel is python
 import os
 import sys
+import shutil
 
 
 def resource_path(relative_path):
@@ -14,7 +15,29 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 
-wb = openpyxl.load_workbook(resource_path("stocks.xlsx"))
+def get_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        if hasattr(sys, "_MEIPASS"):
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            abs_home = os.path.abspath(os.path.expanduser("~"))
+            abs_dir_app = os.path.join(abs_home, f".bill_app")
+            if not os.path.exists(abs_dir_app):
+                os.mkdir(abs_dir_app)
+                shutil.copy(resource_path(relative_path),
+                            os.path.join(abs_dir_app, relative_path))
+            excel_path = os.path.join(abs_dir_app, relative_path)
+        else:
+            # If running from the script's directory
+            excel_path = os.path.abspath(relative_path)
+    except Exception:
+        excel_path = os.path.abspath(".")
+
+    return excel_path
+
+
+excel_path = get_path("stocks.xlsx")
+wb = openpyxl.load_workbook(excel_path)
 
 
 sheet = wb['Sheet1']
@@ -35,7 +58,7 @@ def Add_Stock(New_Record):  # To Add Stock
                           New_Record['Product Name'],
                           int(New_Record['Price']),
                           int(New_Record['Quantity'])])
-        wb.save(resource_path("stocks.xlsx"))
+        wb.save(excel_path)
         # print("Data Added")
 
         return True
@@ -66,7 +89,7 @@ def Edit_stocks(index, Edit_Record):  # this function is to update the data in t
         sheet.cell(row, column=2, value=Edit_Record['Product Name'])
         sheet.cell(row, column=3, value=int(Edit_Record['Price']))
         sheet.cell(row, column=4, value=int(Edit_Record['Quantity']))
-        wb.save(resource_path("stocks.xlsx"))
+        wb.save(excel_path)
         return True
     except Exception as e:
         print(f"An error occurred while adding data: {str(e)}")
@@ -82,7 +105,7 @@ def Delete_stocks(index):  # this function is to delete the data in the excel sh
             sheet.cell(row, column=1, value=i)
             row += 1
 
-        wb.save(resource_path("stocks.xlsx"))
+        wb.save(excel_path)
         return True
     except Exception as e:
         print(f"An error occurred while adding data: {str(e)}")
