@@ -1,26 +1,28 @@
-from flask import Flask, render_template, redirect, url_for, request
-import webview
+
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from modules import admin
 from modules import search
 # import webview # Libray to create a gui window
 
+import webview  # Library to create a gui window
 
 app = Flask(__name__, static_folder='./static', template_folder='./templates')
 
 
 @app.route('/')
-def login():
-    return render_template("login.html", name='cairocoders Home page')
+def loginPage():
+    return render_template("login.html")
 
 
 @app.route('/home')
-def home():
-    return render_template("home.html", name='cairocoders page 2')
+def homePage():
+    return render_template("home.html")
 
 
 @app.route('/admin')
 def adminPage():
     data = admin.Display_stocks()
+
     return render_template("admin.html", data=data)
 
 
@@ -48,6 +50,7 @@ def editStock(index):
         index = int(index)
 
         admin.Edit_stocks(index, Edited_Record)
+
     return redirect(url_for('adminPage'))
 
 
