@@ -69,7 +69,14 @@ def searchStock(product):
         Search_Record = {}  # Create a dictionary to hold the form data
         Search_Record['Product Name'] = request.form.get('')
         search.Search_stocks(Search_Record)
-    return redirect(url_for(''))
+    return redirect(url_for('adminPage'))
+
+
+@app.route('/admin/search')
+def adminSearchPage():
+    data = search.Display_search()
+
+    return render_template("admin.html", data=data)
 
 
 webview.create_window('Billing App', app)  # To enable a gui window

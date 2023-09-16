@@ -1,75 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Admin</title>
-        <link
-            href="{{ url_for('static',filename='css/admin.css') }}"
-            rel="stylesheet"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin</title>
+    <link
+      href="{{ url_for('static',filename='css/admin.css') }}"
+      rel="stylesheet"
+    />
+    <script src="{{ url_for('static',filename='js/admin.js') }}" defer></script>
+  </head>
+  <body>
+    <div class="add-item">
+      <h1>Admin Page</h1>
+      <label><h4>Add Item</h4></label>
+      <form method="POST" action="admin/add">
+        <input
+          type="text"
+          id="product-name"
+          name="product-name"
+          placeholder="Product Name"
         />
-        <script
-            src="{{ url_for('static',filename='js/admin.js') }}"
-            defer
-        ></script>
-    </head>
-    <body>
-        <div class="add-item">
-            <h1>Admin Page</h1>
-            <label><h4>Add Item</h4></label>
-            <form method="POST" action="admin/add">
-                <input
-                    type="text"
-                    id="product-name"
-                    name="product-name"
-                    placeholder="Product Name"
-                />
-                <input
-                    type="number"
-                    id="price"
-                    name="price"
-                    placeholder="Price"
-                />
-                <input
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    placeholder="Quantity"
-                />
-                <button type="submit" class="btn">Add</button> <br />
-            </form>
-        </div>
-        <div class="stock-table">
-            <table>
-                <tr>
-                    <th>S. No</th>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                {% for row in data %}
-                <tr>
-                    <td>{{ row['Index'] }}</td>
-                    <td>{{ row['Product Name'] }}</td>
-                    <td>{{ row['Price'] }}</td>
-                    <td>{{ row['Quantity'] }}</td>
-                    <td>
-                        <button
-                            onclick="displayEditPopUp(`{{row['Index']}}`, `{{ row['Product Name'] }}` , `{{ row['Price'] }}`, `{{ row['Quantity'] }}`)"
-                        >
-                            Edit
-                        </button>
-                    </td>
-                    <td>
-                        <button onclick="deleteRecord(`{{row['Index']}}`)">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </body>
+        <input type="number" id="price" name="price" placeholder="Price" />
+        <input
+          type="number"
+          id="quantity"
+          name="quantity"
+          placeholder="Quantity"
+        />
+        <button type="submit" class="btn">Add</button> <br />
+      </form>
+    </div>
+    <div class="stock-table">
+      <table>
+        <tr>
+          <th>S. No</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th></th>
+          <th></th>
+        </tr>
+        {% for row in data %}
+        <tr>
+          <td>{{ row['Index'] }}</td>
+          <td>{{ row['Product Name'] }}</td>
+          <td>{{ row['Price'] }}</td>
+          <td>{{ row['Quantity'] }}</td>
+          <td>
+            <button
+              onclick="displayEditPopUp(`{{row['Index']}}`, `{{ row['Product Name'] }}` , `{{ row['Price'] }}`, `{{ row['Quantity'] }}`)"
+            >
+              Edit
+            </button>
+          </td>
+          <td>
+            <button onclick="deleteRecord(`{{row['Index']}}`)">Delete</button>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </body>
 </html>
