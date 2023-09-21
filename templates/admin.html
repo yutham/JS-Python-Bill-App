@@ -73,27 +73,34 @@
             </form>
         </div>
         <br />
-        <div class="container-fluid row">
-            <label><h4>Search Item</h4></label>
-            <div class="col-md-10">
-                <input
-                    class="form-control"
-                    list="datalistOptions"
-                    id="Input"
-                    placeholder="Type to search..."
-                />
-                <datalist id="datalistOptions">
-                    {% for row in data %}
-                    <option value="{{ row['Product Name'] }}"></option>
-                    {% endfor %}
-                </datalist>
+
+        <form method="POST" action="/admin/search">
+            <div class="container-fluid row">
+                <label><h4>Search Item</h4></label>
+                <div class="col-md-6">
+                    <input
+                        class="form-control"
+                        list="datalistOptions"
+                        id="Input"
+                        name="search-item"
+                        placeholder="Search by Product Name or Quantity"
+                    />
+                    <datalist id="datalistOptions">
+                        {% for row in data %}
+                        <option value="{{ row['Product Name'] }}"></option>
+                        {% endfor %}
+                    </datalist>
+                </div>
+                <div class="col-md-2">
+                    <button
+                        type="submit"
+                        class="btn btn-outline-secondary btn-md"
+                    >
+                        Search <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
             </div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-outline-secondary btn-md">
-                    Search <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </div>
-        </div>
+        </form>
         <br />
         <div id="datatable">
             <div class="stock-table container-fluid table-responsive">

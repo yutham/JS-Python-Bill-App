@@ -1,6 +1,7 @@
 
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from modules import admin
+from modules import search
 import webview  # Library to create a gui window
 
 app = Flask(__name__, static_folder='./static', template_folder='./templates')
@@ -58,6 +59,23 @@ def deleteStock(index):
         index = int(index)
         admin.Delete_stocks(index)
     return redirect(url_for('adminPage'))
+
+
+@app.route('/admin/search', methods=['POST'])
+def adminSearchPage():
+    if request.method == 'POST':
+        Search_Record = {}  # Create a dictionary to hold the form data
+        search_item = request.form.get('search-item')
+        if search_item.isdigit():
+            Search_Record['Quantity'] = int(search_item)
+            Search_Record['Product Name'] = ''
+        else:
+            Search_Record['Quantity'] = 0
+            Search_Record['Product Name'] = search_item
+
+        data = search.Display_search(Search_Record)
+
+    return render_template("admin.html", data=data)
 
 
 webview.create_window('Billing App', app)  # To enable a gui window
