@@ -16,7 +16,6 @@ def homePage():
     return render_template("home.html")
 
 
-
 @app.route('/admin')
 def adminPage():
     data = admin.Display_stocks()
@@ -33,7 +32,6 @@ def addStock():
         New_Record['Quantity'] = request.form.get('quantity')
         print(New_Record)
         admin.Add_Stock(New_Record)
-
 
     return redirect(url_for('adminPage'))
 
@@ -68,4 +66,3 @@ webview.create_window('Billing App', app)  # To enable a gui window
 if __name__ == '__main__':
     # app.run(debug=True)  # Only use for development (recommended)
     webview.start()  # To start a gui
-

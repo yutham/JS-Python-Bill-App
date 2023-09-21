@@ -2,6 +2,8 @@ function displayEditPopUp(index, product_name, price, quantity) {
   const popup = document.createElement("div");
   popup.id = "popup";
   popup.classList.add("popup");
+  // popup.classList.add("modal-dialog");
+  // popup.classList.add("modal-dialog-centered");
 
   // Create the heading element
   const heading = document.createElement("h1");
