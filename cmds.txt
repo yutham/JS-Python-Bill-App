@@ -1,0 +1,7 @@
+venv/Scripts/activate
+
+
+git pull
+
+pip freeze > requirements.txt
+auto-py-to-exe
